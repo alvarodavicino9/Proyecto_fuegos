@@ -1,0 +1,20 @@
+.floatButton {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  width: 58px;
+  height: 58px;
+  border-radius: 999px;
+  background: #25d366;
+  color: #0b0b0d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  transition: transform 0.15s ease;
+}
+
+.floatButton:hover {
+  transform: scale(1.06);
+}

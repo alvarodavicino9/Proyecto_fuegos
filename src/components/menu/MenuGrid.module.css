@@ -1,0 +1,23 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.empty {
+  color: var(--color-text-muted);
+  padding: 40px 0;
+}
+
+.compactGrid {
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(210px, 240px);
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x proximity;
+}
+
+.compactGrid > * {
+  scroll-snap-align: start;
+}
+

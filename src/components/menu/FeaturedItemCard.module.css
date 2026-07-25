@@ -1,0 +1,125 @@
+.card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.015);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 122, 41, 0.45);
+}
+
+.cardButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+
+.mediaWrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.mediaImage {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 122, 41, 0.28), transparent 55%),
+    radial-gradient(circle at 70% 80%, rgba(232, 64, 44, 0.22), transparent 55%), var(--color-bg-elevated-2);
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .mediaImage {
+  transform: scale(1.08);
+}
+
+.mediaOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(11, 11, 13, 0.85), transparent 55%);
+  pointer-events: none;
+}
+
+.mediaPlaceholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  color: rgba(245, 241, 231, 0.16);
+}
+
+.badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(11, 11, 13, 0.75);
+  border: 1px solid rgba(212, 175, 106, 0.5);
+  color: var(--color-gold-strong);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  z-index: 1;
+}
+
+.body {
+  padding: 18px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.name {
+  font-size: 20px;
+  letter-spacing: 0.02em;
+}
+
+.description {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-family: var(--font-body);
+  flex: 1;
+  margin-bottom: 6px;
+}
+
+.footerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  color: var(--color-gold-strong);
+}
+
+.link {
+  font-weight: 600;
+  font-size: 13px;
+  font-family: var(--font-body);
+  color: var(--color-flame-orange);
+}

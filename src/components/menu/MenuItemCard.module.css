@@ -1,0 +1,142 @@
+.card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 175, 106, 0.4);
+}
+
+.cardButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+
+.media {
+  position: relative;
+  height: 190px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 122, 41, 0.28), transparent 55%),
+    radial-gradient(circle at 70% 80%, rgba(232, 64, 44, 0.22), transparent 55%), var(--color-bg-elevated-2);
+  background-size: cover;
+  background-position: center;
+}
+
+.compact .media {
+  height: 150px;
+}
+
+.mediaPlaceholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  color: rgba(245, 241, 231, 0.16);
+}
+
+.categoryBadge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(11, 11, 13, 0.72);
+  color: var(--color-gold-strong);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+}
+
+.tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(11, 11, 13, 0.75);
+  color: var(--color-gold-strong);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+}
+
+.categoryBadge + .tag,
+.tag ~ .tag {
+  top: 38px;
+}
+
+.quickAdd {
+  position: absolute;
+  bottom: -18px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--gradient-flame);
+  color: #1a0d02;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease;
+}
+
+.quickAdd:hover {
+  transform: scale(1.08);
+}
+
+.body {
+  padding: 26px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.headRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.name {
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+
+.price {
+  font-weight: 700;
+  font-family: var(--font-body);
+  color: var(--color-gold-strong);
+  white-space: nowrap;
+}
+
+.description {
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+  font-family: var(--font-body);
+  flex: 1;
+}

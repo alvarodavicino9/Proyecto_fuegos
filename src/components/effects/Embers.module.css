@@ -1,0 +1,27 @@
+.ember {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffc55c, #ff7a29 60%, transparent 75%);
+  animation-name: emberRise;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+  filter: blur(0.4px);
+  pointer-events: none;
+}
+
+@keyframes emberRise {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-420px) translateX(var(--drift));
+    opacity: 0;
+  }
+}

@@ -1,0 +1,136 @@
+.hero {
+  position: relative;
+  padding: 150px 0 110px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.rings {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.glow {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 520px;
+  background: radial-gradient(circle, rgba(255, 122, 41, 0.18), transparent 60%);
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 720px;
+}
+
+.logoWrap {
+  position: relative;
+  width: clamp(140px, 20vw, 190px);
+  height: clamp(140px, 20vw, 190px);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoGlow {
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle, rgba(255, 122, 41, 0.55), transparent 65%);
+  filter: blur(18px);
+  animation: fuegosGlowPulse 3.6s ease-in-out infinite;
+}
+
+.flame {
+  position: relative;
+  width: 72%;
+  height: 72%;
+  filter: drop-shadow(0 0 22px rgba(255, 122, 41, 0.55));
+  animation: fuegosFlicker 4.2s ease-in-out infinite;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 7vw, 58px);
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+  text-shadow: 0 0 30px rgba(255, 122, 41, 0.35);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold-strong);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  padding: 8px 16px;
+  border-radius: 999px;
+  margin-top: 22px;
+}
+
+.tagline {
+  margin-top: 18px;
+  font-size: clamp(18px, 2.4vw, 24px);
+  font-family: var(--font-display);
+  color: var(--color-text);
+}
+
+.description {
+  margin-top: 20px;
+  color: var(--color-text-muted);
+  font-size: 16px;
+  max-width: 520px;
+}
+
+.actions {
+  margin-top: 38px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@keyframes fuegosFlicker {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1) drop-shadow(0 0 22px rgba(255, 122, 41, 0.55));
+  }
+  25% {
+    transform: scale(1.03) rotate(-1deg);
+    filter: brightness(1.08) drop-shadow(0 0 22px rgba(255, 122, 41, 0.55));
+  }
+  50% {
+    transform: scale(0.98) rotate(1deg);
+    filter: brightness(0.97) drop-shadow(0 0 22px rgba(255, 122, 41, 0.55));
+  }
+  75% {
+    transform: scale(1.02) rotate(-0.5deg);
+    filter: brightness(1.05) drop-shadow(0 0 22px rgba(255, 122, 41, 0.55));
+  }
+}
+
+@keyframes fuegosGlowPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+}

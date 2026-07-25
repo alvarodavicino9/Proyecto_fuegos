@@ -1,0 +1,23 @@
+.section {
+  opacity: 0;
+  transform: translateY(36px) scale(0.98);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.section.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}

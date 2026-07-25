@@ -1,0 +1,23 @@
+.logoFull {
+  height: 42px;
+  width: auto;
+  mix-blend-mode: screen;
+}
+
+.logoCompact {
+  height: 32px;
+  width: auto;
+  mix-blend-mode: screen;
+}
+
+.logoHero {
+  height: 96px;
+  width: auto;
+  mix-blend-mode: screen;
+}
+
+@media (min-width: 640px) {
+  .logoHero {
+    height: 128px;
+  }
+}

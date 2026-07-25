@@ -1,0 +1,32 @@
+.searchWrap {
+  margin-top: 32px;
+}
+
+.search {
+  width: 100%;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 13px 20px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 14.5px;
+}
+
+.search::placeholder {
+  color: var(--color-text-muted);
+}
+
+.featured {
+  margin-bottom: 44px;
+}
+
+.featuredTitle {
+  font-family: var(--font-body);
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 16px;
+}

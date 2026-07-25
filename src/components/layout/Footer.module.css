@@ -1,0 +1,75 @@
+.footer {
+  border-top: 1px solid var(--color-border);
+  padding: 56px 0 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 40px;
+}
+
+.brandCol {
+  max-width: 340px;
+}
+
+.tagline {
+  margin-top: 14px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+.social {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.social a {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--color-bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gold-strong);
+}
+
+.colTitle {
+  font-size: 15px;
+  margin-bottom: 16px;
+  color: var(--color-flame-orange);
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.linkList li {
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+  font-family: var(--font-body);
+}
+
+.linkList a:hover {
+  color: var(--color-gold-strong);
+}
+
+.copy {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-family: var(--font-body);
+  margin-top: 48px;
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

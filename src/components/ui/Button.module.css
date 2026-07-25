@@ -1,0 +1,50 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 13px 26px;
+  font-weight: 600;
+  font-size: 15px;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, filter 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.primary {
+  background: var(--gradient-flame);
+  color: #1a0d02;
+}
+
+.primary:hover {
+  filter: brightness(1.08);
+}
+
+.outline {
+  background: transparent;
+  border-color: var(--color-gold);
+  color: var(--color-gold-strong);
+}
+
+.outline:hover {
+  background: rgba(212, 175, 106, 0.1);
+}
+
+.ghost {
+  background: var(--color-bg-elevated);
+  color: var(--color-text);
+}
+
+.ghost:hover {
+  background: var(--color-bg-elevated-2);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
