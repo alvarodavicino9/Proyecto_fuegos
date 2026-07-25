@@ -101,6 +101,25 @@
   gap: 14px;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 96px 0 64px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions > * {
+    width: 100%;
+  }
+
+  .actions button {
+    width: 100%;
+  }
 }
 
 @keyframes fuegosFlicker {

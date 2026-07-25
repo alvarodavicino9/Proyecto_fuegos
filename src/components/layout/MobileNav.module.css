@@ -1,0 +1,115 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 70;
+  display: flex;
+  justify-content: flex-end;
+  animation: mobileNavFadeIn 0.2s ease;
+}
+
+@keyframes mobileNavFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.drawer {
+  width: min(300px, 82vw);
+  height: 100%;
+  background: var(--color-bg);
+  border-left: 1px solid var(--color-border);
+  padding: 20px 22px 28px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  animation: mobileNavSlideIn 0.25s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+@keyframes mobileNavSlideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.closeButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--color-bg-elevated);
+  border: none;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-border);
+}
+
+.link,
+.linkActive {
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--color-border);
+  font-weight: 700;
+  font-size: 17px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-text-muted);
+}
+
+.linkActive {
+  color: var(--color-gold-strong);
+}
+
+.quick {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.quickLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+  font-family: var(--font-body);
+}
+
+.quickLink svg {
+  color: var(--color-flame-orange);
+  flex-shrink: 0;
+}
+
+.whatsappButton {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--gradient-flame);
+  color: #1a0d02;
+  font-weight: 700;
+  font-size: 14.5px;
+  border-radius: 999px;
+  padding: 14px 18px;
+}

@@ -4,6 +4,8 @@ import Logo from '../brand/Logo'
 import CartIcon from '../icons/CartIcon'
 import InstagramIcon from '../icons/InstagramIcon'
 import LocationIcon from '../icons/LocationIcon'
+import MenuIcon from '../icons/MenuIcon'
+import MobileNav from './MobileNav'
 import { useCart } from '@/context/CartContext'
 import { business } from '@/data/business'
 import { isOpenNow, statusLabel } from '@/utils/businessStatus'
@@ -12,6 +14,7 @@ import styles from './Header.module.css'
 export default function Header() {
   const { totalItems, openCart } = useCart()
   const [now, setNow] = useState(() => new Date())
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   useEffect(() => {
     const interval = window.setInterval(() => setNow(new Date()), 60_000)
@@ -66,12 +69,24 @@ export default function Header() {
           </NavLink>
         </nav>
 
-        <button className={styles.cartButton} onClick={openCart} aria-label="Abrir carrito de pedido">
-          <CartIcon size={18} />
-          <span className={styles.cartLabel}>Pedido</span>
-          {totalItems > 0 && <span className={styles.badge}>{totalItems}</span>}
-        </button>
+        <div className={styles.rightActions}>
+          <button className={styles.cartButton} onClick={openCart} aria-label="Abrir carrito de pedido">
+            <CartIcon size={18} />
+            <span className={styles.cartLabel}>Pedido</span>
+            {totalItems > 0 && <span className={styles.badge}>{totalItems}</span>}
+          </button>
+
+          <button
+            className={styles.menuButton}
+            onClick={() => setMobileNavOpen(true)}
+            aria-label="Abrir menú de navegación"
+          >
+            <MenuIcon size={22} />
+          </button>
+        </div>
       </div>
+
+      <MobileNav open={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
     </header>
   )
 }
