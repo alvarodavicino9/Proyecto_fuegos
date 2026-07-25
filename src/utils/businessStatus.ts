@@ -7,7 +7,7 @@ function toMinutes(time: string): number {
 
 export function isOpenNow(now: Date = new Date()): boolean {
   const { openDays, opens, closes } = business.schedule
-  if (!openDays.includes(now.getDay())) return false
+  if (!(openDays as readonly number[]).includes(now.getDay())) return false
   const nowMinutes = now.getHours() * 60 + now.getMinutes()
   return nowMinutes >= toMinutes(opens) && nowMinutes < toMinutes(closes)
 }
