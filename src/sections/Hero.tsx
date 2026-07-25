@@ -29,11 +29,11 @@ export default function Hero() {
           <FlameIcon size={18} /> {business.shortDescription} en {business.address.city}
         </span>
 
-        <p className={styles.tagline}>{business.tagline}, hecho a las brasas del smash.</p>
+        <p className={styles.tagline}>{business.tagline}: smash burgers con costra dorada, hechos al momento.</p>
 
         <p className={styles.description}>
-          Hamburguesas, lomos y milas con receta de la casa. Pedí online y elegí retiro en el local o envío a tu
-          casa, {business.hours[0].days.toLowerCase()} de {business.hours[0].time}.
+          Hamburguesas smash, lomitos y milanesas con recetas propias de la casa. Pedí online y elegí retiro en el
+          local o envío a domicilio, {business.hours[0].days.toLowerCase()} de {business.hours[0].time}.
         </p>
 
         <div className={styles.actions}>

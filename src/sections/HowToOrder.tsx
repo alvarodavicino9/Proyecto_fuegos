@@ -5,10 +5,10 @@ import { useScrollReveal } from '@/hooks/useScrollReveal'
 import styles from './HowToOrder.module.css'
 
 const steps = [
-  { emoji: '🍔', title: 'Elegí tu hamburguesa', text: 'Recorré el menú y elegí lo que más se te antoje, de cada categoría.' },
-  { emoji: '🛒', title: 'Armá tu pedido', text: 'Sumá todo lo que quieras al carrito. Podés pedir varios productos juntos.' },
-  { emoji: '📲', title: 'Mandalo por WhatsApp', text: 'Con un toque se genera el pedido completo y se envía directo a Fuegos.' },
-  { emoji: '🎉', title: '¡A disfrutar!', text: 'Retirás en el local o pedís envío, en el horario de atención.' },
+  { emoji: '🍔', title: 'Elegí tu producto', text: 'Recorré el menú por categorías y elegí lo que más se te antoje.' },
+  { emoji: '🛒', title: 'Armá tu pedido', text: 'Sumá todos los productos que quieras a un mismo pedido.' },
+  { emoji: '📲', title: 'Confirmá por WhatsApp', text: 'Se genera el detalle completo del pedido, listo para enviar a Fuegos.' },
+  { emoji: '🎉', title: '¡A disfrutar!', text: 'Retirás en el local o pedís envío, dentro del horario de atención.' },
 ]
 
 export default function HowToOrder() {
@@ -23,7 +23,7 @@ export default function HowToOrder() {
           <h2 className="section-title">
             ¿Cómo <span className="highlight">pedimos?</span>
           </h2>
-          <p className="section-subtitle">En 4 pasos tenés tu pedido listo.</p>
+          <p className="section-subtitle">Armá tu pedido en simples pasos y recibilo directo por WhatsApp.</p>
         </div>
 
         <div className={styles.grid}>

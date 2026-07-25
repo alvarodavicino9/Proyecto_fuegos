@@ -20,6 +20,13 @@ export default function Header() {
 
   const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(business.address.full)}`
 
+  // Si ya estás en esa página (y scrolleado), el cambio de ruta no dispara
+  // el ScrollToTop global porque el pathname no cambia. Esto asegura que
+  // tocar cualquier link de navegación siempre te lleve al principio.
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <header className={styles.header}>
       <div className={`container ${styles.statusBar}`}>
@@ -39,22 +46,22 @@ export default function Header() {
       </div>
 
       <div className={`container ${styles.inner}`}>
-        <NavLink to="/" aria-label="Ir al inicio" className={styles.brand} end>
+        <NavLink to="/" aria-label="Ir al inicio" className={styles.brand} end onClick={scrollToTop}>
           <Logo />
-          <span className={styles.subtitle}>Hamburguesas · {business.address.city}, SF</span>
+          <span className={styles.subtitle}>Hamburguesas · {business.address.city}, Santa Fe</span>
         </NavLink>
 
         <nav className={styles.nav} aria-label="Navegación principal">
-          <NavLink to="/" end className={({ isActive }) => (isActive ? styles.navActive : undefined)}>
+          <NavLink to="/" end onClick={scrollToTop} className={({ isActive }) => (isActive ? styles.navActive : undefined)}>
             Inicio
           </NavLink>
-          <NavLink to="/menu" className={({ isActive }) => (isActive ? styles.navActive : undefined)}>
+          <NavLink to="/menu" onClick={scrollToTop} className={({ isActive }) => (isActive ? styles.navActive : undefined)}>
             Menú
           </NavLink>
-          <NavLink to="/nosotros" className={({ isActive }) => (isActive ? styles.navActive : undefined)}>
+          <NavLink to="/nosotros" onClick={scrollToTop} className={({ isActive }) => (isActive ? styles.navActive : undefined)}>
             Nosotros
           </NavLink>
-          <NavLink to="/contacto" className={({ isActive }) => (isActive ? styles.navActive : undefined)}>
+          <NavLink to="/contacto" onClick={scrollToTop} className={({ isActive }) => (isActive ? styles.navActive : undefined)}>
             Contacto
           </NavLink>
         </nav>

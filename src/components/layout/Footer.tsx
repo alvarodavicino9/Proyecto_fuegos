@@ -7,6 +7,10 @@ import { business } from '@/data/business'
 import { buildGenericGreeting, buildWhatsAppUrl } from '@/utils/whatsapp'
 import styles from './Footer.module.css'
 
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
 export default function Footer() {
   return (
     <footer className={styles.footer}>
@@ -44,16 +48,16 @@ export default function Footer() {
           <h3 className={styles.colTitle}>Navegación</h3>
           <ul className={styles.linkList}>
             <li>
-              <Link to="/">→ Inicio</Link>
+              <Link to="/" onClick={scrollToTop}>→ Inicio</Link>
             </li>
             <li>
-              <Link to="/menu">→ Menú</Link>
+              <Link to="/menu" onClick={scrollToTop}>→ Menú</Link>
             </li>
             <li>
-              <Link to="/nosotros">→ Nosotros</Link>
+              <Link to="/nosotros" onClick={scrollToTop}>→ Nosotros</Link>
             </li>
             <li>
-              <Link to="/contacto">→ Contacto</Link>
+              <Link to="/contacto" onClick={scrollToTop}>→ Contacto</Link>
             </li>
           </ul>
         </div>

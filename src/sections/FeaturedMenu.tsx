@@ -29,7 +29,8 @@ export default function FeaturedMenu() {
             Directo a la <span className="highlight">plancha</span>
           </h2>
           <p className="section-subtitle">
-            Los favoritos de siempre, con receta de la casa. Tocá una para ver el detalle.
+            Los clásicos de siempre, con receta propia de la casa. Tocá cualquiera para ver el detalle y sumarlo a tu
+            pedido.
           </p>
         </div>
 

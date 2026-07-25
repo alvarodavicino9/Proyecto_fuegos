@@ -32,8 +32,8 @@ export default function MenuSection() {
             Nuestro <span className="highlight">menú</span>
           </h2>
           <p className="section-subtitle">
-            Tocá cualquier producto para personalizarlo (tamaño, extras, ingredientes) y sumarlo a tu pedido. Precios
-            sujetos a confirmación final del dueño.
+            Tocá cualquier producto para personalizarlo — elegí tamaño, sumá extras o sacá ingredientes — y agregalo a
+            tu pedido.
           </p>
         </div>
 
