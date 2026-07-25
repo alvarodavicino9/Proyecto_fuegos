@@ -89,3 +89,18 @@ export function buildOrderMessage(order: OrderDetails): string {
 export function buildGenericGreeting(): string {
   return `¡Hola ${business.name}! 🔥 Quisiera hacer un pedido.`
 }
+
+export interface QuickChatOption {
+  label: string
+  message: string
+}
+
+// Opciones rápidas del widget de WhatsApp flotante (ver WhatsAppFloatButton).
+export const QUICK_CHAT_OPTIONS: QuickChatOption[] = [
+  { label: 'Quiero hacer un pedido', message: `¡Hola ${business.name}! 🔥 Quiero hacer un pedido.` },
+  { label: 'Tengo una consulta sobre el menú', message: `¡Hola ${business.name}! 🔥 Tengo una consulta sobre el menú.` },
+  {
+    label: 'Quiero saber si hacen envíos a mi zona',
+    message: `¡Hola ${business.name}! 🔥 Quiero saber si hacen envíos a mi zona.`,
+  },
+]
