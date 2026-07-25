@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import Logo from '../brand/Logo'
 import CartIcon from '../icons/CartIcon'
@@ -86,7 +87,10 @@ export default function Header() {
         </div>
       </div>
 
-      <MobileNav open={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />
+      {createPortal(
+        <MobileNav open={mobileNavOpen} onClose={() => setMobileNavOpen(false)} />,
+        document.body,
+      )}
     </header>
   )
 }
