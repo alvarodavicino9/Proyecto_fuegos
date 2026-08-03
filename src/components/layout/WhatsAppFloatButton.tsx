@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import WhatsAppIcon from '../icons/WhatsAppIcon'
 import CloseIcon from '../icons/CloseIcon'
-import { business } from '@/data/business'
+import { useSiteSettings } from '@/context/SiteSettingsContext'
 import { isOpenNow } from '@/utils/businessStatus'
-import { buildGenericGreeting, buildWhatsAppUrl, QUICK_CHAT_OPTIONS } from '@/utils/whatsapp'
+import { buildGenericGreeting, buildWhatsAppUrl, getQuickChatOptions } from '@/utils/whatsapp'
 import styles from './WhatsAppFloatButton.module.css'
 
 // Botón flotante de WhatsApp: en vez de ir directo al chat, abre un mini
@@ -11,6 +11,7 @@ import styles from './WhatsAppFloatButton.module.css'
 // cliente elija el motivo antes de escribir, similar a los widgets de
 // chat comerciales.
 export default function WhatsAppFloatButton() {
+  const { business } = useSiteSettings()
   const [open, setOpen] = useState(false)
   const wrapRef = useRef<HTMLDivElement>(null)
 
@@ -28,7 +29,7 @@ export default function WhatsAppFloatButton() {
   }, [open])
 
   function openWhatsApp(message: string) {
-    window.open(buildWhatsAppUrl(message), '_blank', 'noopener,noreferrer')
+    window.open(buildWhatsAppUrl(message, business.whatsappNumber), '_blank', 'noopener,noreferrer')
     setOpen(false)
   }
 
@@ -44,7 +45,7 @@ export default function WhatsAppFloatButton() {
               <strong>{business.name}</strong>
               <span className={styles.status}>
                 <span className={styles.statusDot} />
-                {isOpenNow() ? 'Disponible ahora' : 'Te respondemos apenas abramos'}
+                {isOpenNow(business) ? 'Disponible ahora' : 'Te respondemos apenas abramos'}
               </span>
             </div>
             <button className={styles.closeBtn} onClick={() => setOpen(false)} aria-label="Cerrar chat">
@@ -55,7 +56,7 @@ export default function WhatsAppFloatButton() {
           <div className={styles.panelBody}>
             <p className={styles.bubble}>¡Hola! 👋 ¿En qué podemos ayudarte? Elegí una opción o escribinos directo.</p>
 
-            {QUICK_CHAT_OPTIONS.map((option) => (
+            {getQuickChatOptions(business).map((option) => (
               <button
                 key={option.label}
                 className={styles.optionButton}
@@ -66,7 +67,7 @@ export default function WhatsAppFloatButton() {
             ))}
           </div>
 
-          <button className={styles.openBar} onClick={() => openWhatsApp(buildGenericGreeting())}>
+          <button className={styles.openBar} onClick={() => openWhatsApp(buildGenericGreeting(business))}>
             <WhatsAppIcon size={18} />
             Abrir WhatsApp
           </button>

@@ -1,15 +1,22 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { MenuCategoryId, MenuItem } from '@/types/menu'
-import { categories, menuItems } from '@/data/menu'
+import { useMenu } from '@/hooks/useMenu'
 import MenuCategoryTabs from '@/components/menu/MenuCategoryTabs'
 import MenuGrid from '@/components/menu/MenuGrid'
 import ProductModal from '@/components/menu/ProductModal'
 import styles from './MenuSection.module.css'
 
 export default function MenuSection() {
-  const [activeId, setActiveId] = useState<MenuCategoryId>(categories[0].id)
+  const { categories, menuItems } = useMenu()
+  const [activeId, setActiveId] = useState<MenuCategoryId>('')
   const [search, setSearch] = useState('')
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
+
+  // La primera categoría llega async (o del fallback estático) — apenas
+  // está disponible y todavía no elegimos ninguna, la seleccionamos.
+  useEffect(() => {
+    if (!activeId && categories.length > 0) setActiveId(categories[0].id)
+  }, [activeId, categories])
 
   const items = useMemo(() => {
     const query = search.trim().toLowerCase()
@@ -19,7 +26,7 @@ export default function MenuSection() {
         query.length === 0 || item.name.toLowerCase().includes(query) || item.description.toLowerCase().includes(query)
       return matchesCategory && matchesSearch
     })
-  }, [activeId, search])
+  }, [activeId, search, menuItems])
 
   const selectedCategory = selectedItem ? categories.find((c) => c.id === selectedItem.categoryId) : undefined
 

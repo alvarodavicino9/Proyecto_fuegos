@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import FlameIcon from '@/components/icons/FlameIcon'
-import { business } from '@/data/business'
+import { useSiteSettings } from '@/context/SiteSettingsContext'
 import { isOpenNow, statusLabel } from '@/utils/businessStatus'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import styles from './InfoStrip.module.css'
@@ -11,6 +11,7 @@ import styles from './InfoStrip.module.css'
 // propia sección (Contacto), esto es solo un adelanto con estado en vivo.
 export default function InfoStrip() {
   const { ref, revealed } = useScrollReveal<HTMLElement>()
+  const { business } = useSiteSettings()
   const [now, setNow] = useState(() => new Date())
 
   useEffect(() => {
@@ -22,8 +23,8 @@ export default function InfoStrip() {
     <section ref={ref} className={`${styles.strip} ${revealed ? styles.revealed : ''}`}>
       <div className={`container ${styles.bar}`}>
         <span className={styles.item}>
-          <span className={isOpenNow(now) ? styles.dotOpen : styles.dotClosed} />
-          {statusLabel(now)}
+          <span className={isOpenNow(business, now) ? styles.dotOpen : styles.dotClosed} />
+          {statusLabel(business, now)}
         </span>
 
         <span className={styles.divider} aria-hidden="true" />

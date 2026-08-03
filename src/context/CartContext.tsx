@@ -24,6 +24,8 @@ type Action =
   | { type: 'SET_NOTES'; value: string }
   | { type: 'SET_CUSTOMER_NAME'; value: string }
   | { type: 'SET_CUSTOMER_PHONE'; value: string }
+  | { type: 'SET_DELIVERY_ZONE'; value: string }
+  | { type: 'SET_DELIVERY_SLOT'; value: string }
 
 const initialState: CartState = {
   lines: [],
@@ -34,6 +36,8 @@ const initialState: CartState = {
   notes: '',
   customerName: '',
   customerPhone: '',
+  deliveryZoneId: '',
+  deliverySlotId: '',
 }
 
 function loadInitialState(): CartState {
@@ -70,7 +74,7 @@ function reducer(state: CartState, action: Action): CartState {
       return { ...state, lines: state.lines.filter((line) => line.lineId !== action.lineId) }
     }
     case 'CLEAR_CART':
-      return { ...state, lines: [], notes: '', address: '' }
+      return { ...state, lines: [], notes: '', address: '', deliveryZoneId: '', deliverySlotId: '' }
     case 'OPEN_CART':
       return { ...state, isOpen: true }
     case 'CLOSE_CART':
@@ -87,6 +91,10 @@ function reducer(state: CartState, action: Action): CartState {
       return { ...state, customerName: action.value }
     case 'SET_CUSTOMER_PHONE':
       return { ...state, customerPhone: action.value }
+    case 'SET_DELIVERY_ZONE':
+      return { ...state, deliveryZoneId: action.value }
+    case 'SET_DELIVERY_SLOT':
+      return { ...state, deliverySlotId: action.value }
     default:
       return state
   }
@@ -109,6 +117,8 @@ interface CartContextValue {
   setNotes: (value: string) => void
   setCustomerName: (value: string) => void
   setCustomerPhone: (value: string) => void
+  setDeliveryZone: (value: string) => void
+  setDeliverySlot: (value: string) => void
 }
 
 const CartContext = createContext<CartContextValue | undefined>(undefined)
@@ -143,6 +153,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setNotes: (value) => dispatch({ type: 'SET_NOTES', value }),
     setCustomerName: (value) => dispatch({ type: 'SET_CUSTOMER_NAME', value }),
     setCustomerPhone: (value) => dispatch({ type: 'SET_CUSTOMER_PHONE', value }),
+    setDeliveryZone: (value) => dispatch({ type: 'SET_DELIVERY_ZONE', value }),
+    setDeliverySlot: (value) => dispatch({ type: 'SET_DELIVERY_SLOT', value }),
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

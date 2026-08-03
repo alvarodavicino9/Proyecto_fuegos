@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react'
 import { useCart } from '@/context/CartContext'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { buildOrderMessage, buildWhatsAppUrl } from '@/utils/whatsapp'
-import { business } from '@/data/business'
+import { useSiteSettings } from '@/context/SiteSettingsContext'
+import { useDeliveryOptions } from '@/hooks/useDeliveryOptions'
+import { saveOrderToSupabase } from '@/utils/saveOrder'
+import { trackEvent, trackMetaEvent } from '@/lib/analytics'
 import { getSizeOption } from '@/data/pricing'
 import CloseIcon from '../icons/CloseIcon'
 import TrashIcon from '../icons/TrashIcon'
@@ -27,8 +30,12 @@ export default function CartDrawer() {
     setNotes,
     setCustomerName,
     setCustomerPhone,
+    setDeliveryZone,
+    setDeliverySlot,
     clearCart,
   } = useCart()
+  const { business } = useSiteSettings()
+  const { zones, slots } = useDeliveryOptions()
 
   const [step, setStep] = useState<'cart' | 'review'>('cart')
 
@@ -36,7 +43,21 @@ export default function CartDrawer() {
     if (state.isOpen) setStep('cart')
   }, [state.isOpen])
 
+  // Preselecciona la primera zona/horario activos apenas se cargan, para
+  // que el costo de envío ya quede reflejado sin pasos extra.
+  useEffect(() => {
+    if (state.deliveryMethod !== 'envio') return
+    if (!state.deliveryZoneId && zones.length > 0) setDeliveryZone(zones[0].id)
+    if (!state.deliverySlotId && slots.length > 0) setDeliverySlot(slots[0].id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.deliveryMethod, zones, slots])
+
   if (!state.isOpen) return null
+
+  const selectedZone = zones.find((z) => z.id === state.deliveryZoneId)
+  const selectedSlot = slots.find((s) => s.id === state.deliverySlotId)
+  const deliveryCost = state.deliveryMethod === 'envio' ? selectedZone?.cost ?? 0 : 0
+  const grandTotal = totalPrice + deliveryCost
 
   const canReview =
     state.lines.length > 0 &&
@@ -44,7 +65,7 @@ export default function CartDrawer() {
     (state.deliveryMethod === 'retiro' || state.address.trim().length > 0)
 
   function handleConfirm() {
-    const message = buildOrderMessage({
+    const message = buildOrderMessage(business, {
       lines: state.lines,
       deliveryMethod: state.deliveryMethod,
       paymentMethod: state.paymentMethod,
@@ -52,10 +73,29 @@ export default function CartDrawer() {
       notes: state.notes,
       customerName: state.customerName,
       customerPhone: state.customerPhone,
+      deliveryZoneName: selectedZone?.name,
+      deliveryCost,
+      deliverySlotLabel: selectedSlot?.label,
     })
-    window.open(buildWhatsAppUrl(message), '_blank', 'noopener,noreferrer')
+    window.open(buildWhatsAppUrl(message, business.whatsappNumber), '_blank', 'noopener,noreferrer')
+    saveOrderToSupabase({ state, subtotal: totalPrice, deliveryCost, zone: selectedZone, slot: selectedSlot }).catch(
+      (err) => console.error(err),
+    )
+
+    // Conversión real del negocio: el pedido se mandó por WhatsApp. Es el
+    // evento que más importa mirar en Analytics/Meta a la hora de medir si
+    // el sitio está funcionando.
+    trackEvent('generate_lead', { currency: 'ARS', value: grandTotal, method: 'whatsapp' })
+    trackMetaEvent('Lead', { currency: 'ARS', value: grandTotal })
+
     clearCart()
     closeCart()
+  }
+
+  function handleGoToReview() {
+    trackEvent('begin_checkout', { currency: 'ARS', value: grandTotal })
+    trackMetaEvent('InitiateCheckout', { currency: 'ARS', value: grandTotal })
+    setStep('review')
   }
 
   return (
@@ -109,15 +149,52 @@ export default function CartDrawer() {
                   </Field>
 
                   {state.deliveryMethod === 'envio' && (
-                    <Field label="Dirección de envío *" htmlFor="address">
-                      <input
-                        id="address"
-                        className={styles.input}
-                        placeholder="Calle, número y referencias"
-                        value={state.address}
-                        onChange={(e) => setAddress(e.target.value)}
-                      />
-                    </Field>
+                    <>
+                      <Field label="Dirección de envío *" htmlFor="address">
+                        <input
+                          id="address"
+                          className={styles.input}
+                          placeholder="Calle, número y referencias"
+                          value={state.address}
+                          onChange={(e) => setAddress(e.target.value)}
+                        />
+                      </Field>
+
+                      {zones.length > 0 && (
+                        <Field label="Zona de envío">
+                          <div className={styles.optionRowWrap}>
+                            {zones.map((zone) => (
+                              <button
+                                key={zone.id}
+                                className={state.deliveryZoneId === zone.id ? styles.optionActive : styles.option}
+                                onClick={() => setDeliveryZone(zone.id)}
+                              >
+                                {zone.name}
+                                <span className={styles.zoneCost}>
+                                  {zone.cost > 0 ? `+${formatCurrency(zone.cost)}` : 'Sin cargo'}
+                                </span>
+                              </button>
+                            ))}
+                          </div>
+                        </Field>
+                      )}
+
+                      {slots.length > 0 && (
+                        <Field label="Horario de entrega">
+                          <div className={styles.optionRowWrap}>
+                            {slots.map((slot) => (
+                              <button
+                                key={slot.id}
+                                className={state.deliverySlotId === slot.id ? styles.optionActive : styles.option}
+                                onClick={() => setDeliverySlot(slot.id)}
+                              >
+                                {slot.label}
+                              </button>
+                            ))}
+                          </div>
+                        </Field>
+                      )}
+                    </>
                   )}
 
                   <Field label="Tu nombre *" htmlFor="name">
@@ -171,9 +248,9 @@ export default function CartDrawer() {
                 <footer className={styles.footer}>
                   <div className={styles.total}>
                     <span>Total</span>
-                    <strong>{formatCurrency(totalPrice)}</strong>
+                    <strong>{formatCurrency(grandTotal)}</strong>
                   </div>
-                  <Button onClick={() => setStep('review')} disabled={!canReview} className={styles.reviewButton}>
+                  <Button onClick={handleGoToReview} disabled={!canReview} className={styles.reviewButton}>
                     Revisar y enviar pedido
                   </Button>
                   {!canReview && <p className={styles.hint}>Completá nombre {state.deliveryMethod === 'envio' ? 'y dirección ' : ''}para continuar.</p>}
@@ -232,6 +309,20 @@ export default function CartDrawer() {
                     <strong>{state.address}</strong>
                   </div>
                 )}
+                {state.deliveryMethod === 'envio' && selectedZone && (
+                  <div className={styles.reviewRow}>
+                    <span>Zona</span>
+                    <strong>
+                      {selectedZone.name} {selectedZone.cost > 0 ? `(+${formatCurrency(selectedZone.cost)})` : ''}
+                    </strong>
+                  </div>
+                )}
+                {state.deliveryMethod === 'envio' && selectedSlot && (
+                  <div className={styles.reviewRow}>
+                    <span>Horario</span>
+                    <strong>{selectedSlot.label}</strong>
+                  </div>
+                )}
                 <div className={styles.reviewRow}>
                   <span>Nombre</span>
                   <strong>{state.customerName}</strong>
@@ -258,7 +349,7 @@ export default function CartDrawer() {
             <footer className={styles.footer}>
               <div className={styles.total}>
                 <span>Total</span>
-                <strong>{formatCurrency(totalPrice)}</strong>
+                <strong>{formatCurrency(grandTotal)}</strong>
               </div>
               <Button icon={<WhatsAppIcon size={18} />} onClick={handleConfirm} className={styles.confirmButton}>
                 Confirmar y enviar

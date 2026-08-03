@@ -8,12 +8,13 @@ import LocationIcon from '../icons/LocationIcon'
 import MenuIcon from '../icons/MenuIcon'
 import MobileNav from './MobileNav'
 import { useCart } from '@/context/CartContext'
-import { business } from '@/data/business'
+import { useSiteSettings } from '@/context/SiteSettingsContext'
 import { isOpenNow, statusLabel } from '@/utils/businessStatus'
 import styles from './Header.module.css'
 
 export default function Header() {
   const { totalItems, openCart } = useCart()
+  const { business } = useSiteSettings()
   const [now, setNow] = useState(() => new Date())
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
@@ -35,8 +36,8 @@ export default function Header() {
     <header className={styles.header}>
       <div className={`container ${styles.statusBar}`}>
         <span className={styles.statusLabel}>
-          <span className={isOpenNow(now) ? styles.dotOpen : styles.dotClosed} />
-          {statusLabel(now)}
+          <span className={isOpenNow(business, now) ? styles.dotOpen : styles.dotClosed} />
+          {statusLabel(business, now)}
         </span>
 
         <div className={styles.quickLinks}>

@@ -4,7 +4,7 @@ import MagnetWrap from '@/components/ui/MagnetWrap'
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon'
 import FlameIcon from '@/components/icons/FlameIcon'
 import Embers from '@/components/effects/Embers'
-import { business } from '@/data/business'
+import { useSiteSettings } from '@/context/SiteSettingsContext'
 import { buildGenericGreeting, buildWhatsAppUrl } from '@/utils/whatsapp'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import styles from './FinalCta.module.css'
@@ -12,6 +12,7 @@ import styles from './FinalCta.module.css'
 export default function FinalCta() {
   const navigate = useNavigate()
   const { ref, revealed } = useScrollReveal<HTMLElement>()
+  const { business } = useSiteSettings()
 
   return (
     <section ref={ref} className={`${styles.cta} ${revealed ? styles.revealed : ''}`}>
@@ -35,7 +36,7 @@ export default function FinalCta() {
             <Button
               variant="outline"
               icon={<WhatsAppIcon size={18} />}
-              onClick={() => window.open(buildWhatsAppUrl(buildGenericGreeting()), '_blank')}
+              onClick={() => window.open(buildWhatsAppUrl(buildGenericGreeting(business), business.whatsappNumber), '_blank')}
             >
               Pedir por WhatsApp
             </Button>

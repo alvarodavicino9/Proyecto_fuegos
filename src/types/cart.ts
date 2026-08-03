@@ -31,4 +31,8 @@ export interface CartState {
   notes: string
   customerName: string
   customerPhone: string
+  /** Zona de envío elegida (id de delivery_zones en Supabase, vacío si no aplica). */
+  deliveryZoneId: string
+  /** Horario de entrega elegido (id de delivery_slots en Supabase, vacío si no aplica). */
+  deliverySlotId: string
 }

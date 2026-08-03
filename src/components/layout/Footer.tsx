@@ -3,7 +3,7 @@ import Logo from '../brand/Logo'
 import InstagramIcon from '../icons/InstagramIcon'
 import WhatsAppIcon from '../icons/WhatsAppIcon'
 import LocationIcon from '../icons/LocationIcon'
-import { business } from '@/data/business'
+import { useSiteSettings } from '@/context/SiteSettingsContext'
 import { buildGenericGreeting, buildWhatsAppUrl } from '@/utils/whatsapp'
 import styles from './Footer.module.css'
 
@@ -12,6 +12,8 @@ function scrollToTop() {
 }
 
 export default function Footer() {
+  const { business } = useSiteSettings()
+
   return (
     <footer className={styles.footer}>
       <div className={`container ${styles.grid}`}>
@@ -26,7 +28,7 @@ export default function Footer() {
               <InstagramIcon />
             </a>
             <a
-              href={buildWhatsAppUrl(buildGenericGreeting())}
+              href={buildWhatsAppUrl(buildGenericGreeting(business), business.whatsappNumber)}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp de Fuegos"

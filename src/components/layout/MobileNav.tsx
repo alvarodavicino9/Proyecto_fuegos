@@ -4,7 +4,7 @@ import InstagramIcon from '../icons/InstagramIcon'
 import LocationIcon from '../icons/LocationIcon'
 import WhatsAppIcon from '../icons/WhatsAppIcon'
 import Logo from '../brand/Logo'
-import { business } from '@/data/business'
+import { useSiteSettings } from '@/context/SiteSettingsContext'
 import { buildGenericGreeting, buildWhatsAppUrl } from '@/utils/whatsapp'
 import styles from './MobileNav.module.css'
 
@@ -20,6 +20,7 @@ function scrollToTop() {
 // Menú de navegación para mobile: se abre desde el botón hamburguesa del
 // header (oculto en desktop, donde el nav ya se ve completo).
 export default function MobileNav({ open, onClose }: Props) {
+  const { business } = useSiteSettings()
   if (!open) return null
 
   const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(business.address.full)}`
@@ -66,7 +67,7 @@ export default function MobileNav({ open, onClose }: Props) {
         </div>
 
         <a
-          href={buildWhatsAppUrl(buildGenericGreeting())}
+          href={buildWhatsAppUrl(buildGenericGreeting(business), business.whatsappNumber)}
           target="_blank"
           rel="noopener noreferrer"
           className={styles.whatsappButton}

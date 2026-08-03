@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import type { MenuCategory, MenuItem } from '@/types/menu'
 import { SIZE_OPTIONS, getSizeExtraCost, type SizeId } from '@/data/pricing'
 import { EXTRA_OPTIONS } from '@/data/extras'
-import { business } from '@/data/business'
+import { useSiteSettings } from '@/context/SiteSettingsContext'
+import { trackEvent, trackMetaEvent } from '@/lib/analytics'
 import { itemHasSizes } from '@/utils/menuHelpers'
 import { formatCurrency } from '@/utils/formatCurrency'
 import { useCart } from '@/context/CartContext'
@@ -19,6 +20,7 @@ interface Props {
 
 export default function ProductModal({ item, category, onClose }: Props) {
   const { addLine, openCart } = useCart()
+  const { business } = useSiteSettings()
   const hasSizes = itemHasSizes(item)
 
   const [size, setSize] = useState<SizeId>('simple')
@@ -82,6 +84,12 @@ export default function ProductModal({ item, category, onClose }: Props) {
       itemNotes: notes.trim(),
       unitPrice,
     })
+    trackEvent('add_to_cart', {
+      currency: 'ARS',
+      value: totalPrice,
+      items: [{ item_id: item.id, item_name: item.name, quantity, price: unitPrice }],
+    })
+    trackMetaEvent('AddToCart', { content_name: item.name, currency: 'ARS', value: totalPrice })
     openCart()
     handleClose()
   }

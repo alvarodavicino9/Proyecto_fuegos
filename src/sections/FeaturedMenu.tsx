@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { MenuItem } from '@/types/menu'
-import { categories, menuItems } from '@/data/menu'
+import { useMenu } from '@/hooks/useMenu'
 import FeaturedItemCard from '@/components/menu/FeaturedItemCard'
 import ProductModal from '@/components/menu/ProductModal'
 import Button from '@/components/ui/Button'
@@ -10,12 +10,13 @@ import styles from './FeaturedMenu.module.css'
 
 export default function FeaturedMenu() {
   const navigate = useNavigate()
+  const { categories, menuItems } = useMenu()
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
   const { ref, revealed } = useScrollReveal<HTMLElement>()
 
   const featured = useMemo(
     () => menuItems.filter((item) => item.tags?.includes('más pedida') || item.tags?.includes('especial')),
-    [],
+    [menuItems],
   )
 
   const selectedCategory = selectedItem ? categories.find((c) => c.id === selectedItem.categoryId) : undefined

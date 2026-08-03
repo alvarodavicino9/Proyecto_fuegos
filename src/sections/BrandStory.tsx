@@ -1,5 +1,5 @@
 import InstagramIcon from '@/components/icons/InstagramIcon'
-import { business } from '@/data/business'
+import { useSiteSettings } from '@/context/SiteSettingsContext'
 import styles from './BrandStory.module.css'
 
 const highlights = [
@@ -9,6 +9,8 @@ const highlights = [
 ]
 
 export default function BrandStory() {
+  const { business } = useSiteSettings()
+
   return (
     <section className="section">
       <div className="container">

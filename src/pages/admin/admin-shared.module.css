@@ -1,0 +1,333 @@
+/* Estilos compartidos por todas las pantallas del panel admin. Varios
+   componentes importan este mismo archivo — los nombres de clase quedan
+   scopeados por CSS Modules igual, así que es seguro reusarlo. */
+
+.page {
+  max-width: 1040px;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.pageTitle {
+  font-size: 26px;
+}
+
+.pageSubtitle {
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  margin-top: 6px;
+}
+
+.card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  margin-bottom: 14px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  font-size: 13.5px;
+  font-family: var(--font-body);
+  vertical-align: top;
+}
+
+.table th {
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.badgeNuevo {
+  background: rgba(255, 122, 41, 0.16);
+  color: var(--color-flame-orange);
+}
+
+.badgePreparando {
+  background: rgba(232, 200, 138, 0.16);
+  color: var(--color-gold-strong);
+}
+
+.badgeEnCamino {
+  background: rgba(255, 197, 92, 0.16);
+  color: var(--color-flame-yellow);
+}
+
+.badgeEntregado {
+  background: rgba(120, 200, 140, 0.16);
+  color: #78c88c;
+}
+
+.badgeCancelado {
+  background: rgba(232, 64, 44, 0.16);
+  color: var(--color-flame-red);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+}
+
+.input,
+.textarea,
+.select {
+  background: var(--color-bg-elevated-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--color-text);
+  font-size: 14px;
+  font-family: inherit;
+  width: 100%;
+}
+
+.textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-family: var(--font-body);
+}
+
+.actionsRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.button {
+  border-radius: var(--radius-sm);
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated-2);
+  color: var(--color-text);
+}
+
+.buttonPrimary {
+  background: var(--gradient-flame);
+  color: #1a0d02;
+  border-color: transparent;
+}
+
+.buttonDanger {
+  background: rgba(232, 64, 44, 0.12);
+  color: var(--color-flame-red);
+  border-color: rgba(232, 64, 44, 0.3);
+}
+
+.buttonGhost {
+  background: transparent;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+
+.toggleTrack {
+  width: 38px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--color-bg-elevated-2);
+  border: 1px solid var(--color-border);
+  position: relative;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.toggleTrackOn {
+  background: var(--gradient-flame);
+  border-color: transparent;
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--color-text);
+  transition: transform 0.2s ease;
+}
+
+.toggleThumbOn {
+  transform: translateX(16px);
+  background: #1a0d02;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.statCard {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+}
+
+.statLabel {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.statValue {
+  font-size: 26px;
+  margin-top: 6px;
+  color: var(--color-gold-strong);
+}
+
+.emptyState {
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+  font-family: var(--font-body);
+  padding: 24px 0;
+  text-align: center;
+}
+
+.loadingState {
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+  font-family: var(--font-body);
+  padding: 24px 0;
+}
+
+.hint {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-family: var(--font-body);
+  margin-top: 4px;
+}
+
+.errorText {
+  color: var(--color-flame-red);
+  font-size: 12.5px;
+  font-family: var(--font-body);
+}
+
+.successText {
+  color: #78c88c;
+  font-size: 12.5px;
+  font-family: var(--font-body);
+}
+
+.thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-elevated-2);
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.filterRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.filterButton,
+.filterButtonActive {
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  font-family: var(--font-body);
+}
+
+.filterButton {
+  background: var(--color-bg-elevated-2);
+  color: var(--color-text-muted);
+}
+
+.filterButtonActive {
+  background: var(--gradient-flame);
+  color: #1a0d02;
+  border-color: transparent;
+}

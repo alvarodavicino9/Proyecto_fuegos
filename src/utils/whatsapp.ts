@@ -1,9 +1,9 @@
 import type { CartLine, DeliveryMethod, PaymentMethod } from '@/types/cart'
 import { formatCurrency } from './formatCurrency'
-import { business } from '@/data/business'
 import { getSizeOption } from '@/data/pricing'
+import type { BusinessData } from '@/data/business'
 
-export function buildWhatsAppUrl(message: string, phone: string = business.whatsappNumber): string {
+export function buildWhatsAppUrl(message: string, phone: string): string {
   return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
 }
 
@@ -25,6 +25,9 @@ export interface OrderDetails {
   notes: string
   customerName: string
   customerPhone?: string
+  deliveryZoneName?: string
+  deliveryCost?: number
+  deliverySlotLabel?: string
 }
 
 function describeLine(line: CartLine): string {
@@ -47,24 +50,42 @@ function describeLine(line: CartLine): string {
   return `• ${line.quantity}x ${line.item.name}${detailText} — ${formatCurrency(line.unitPrice * line.quantity)}`
 }
 
-export function buildOrderMessage(order: OrderDetails): string {
-  const { lines, deliveryMethod, paymentMethod, address, notes, customerName, customerPhone } = order
+export function buildOrderMessage(business: BusinessData, order: OrderDetails): string {
+  const {
+    lines,
+    deliveryMethod,
+    paymentMethod,
+    address,
+    notes,
+    customerName,
+    customerPhone,
+    deliveryZoneName,
+    deliveryCost,
+    deliverySlotLabel,
+  } = order
 
   const itemsText = lines.map(describeLine).join('\n')
-  const total = lines.reduce((sum, line) => sum + line.unitPrice * line.quantity, 0)
+  const subtotal = lines.reduce((sum, line) => sum + line.unitPrice * line.quantity, 0)
+  const total = subtotal + (deliveryCost ?? 0)
 
   const parts = [
     `¡Hola ${business.name}! 🔥 Quiero hacer un pedido.`,
     '',
     itemsText,
     '',
-    `Total: ${formatCurrency(total)}`,
-    '',
-    `Entrega: ${deliveryLabel[deliveryMethod]}`,
+    `Subtotal: ${formatCurrency(subtotal)}`,
   ]
+
+  if (deliveryCost) {
+    parts.push(`Costo de envío: ${formatCurrency(deliveryCost)}`)
+  }
+
+  parts.push(`Total: ${formatCurrency(total)}`, '', `Entrega: ${deliveryLabel[deliveryMethod]}`)
 
   if (deliveryMethod === 'envio') {
     parts.push(`Dirección de envío: ${address || '(a confirmar)'}`)
+    if (deliveryZoneName) parts.push(`Zona: ${deliveryZoneName}`)
+    if (deliverySlotLabel) parts.push(`Horario de entrega: ${deliverySlotLabel}`)
   }
 
   parts.push(`Pago: ${paymentLabel[paymentMethod]}`)
@@ -86,7 +107,7 @@ export function buildOrderMessage(order: OrderDetails): string {
   return parts.join('\n')
 }
 
-export function buildGenericGreeting(): string {
+export function buildGenericGreeting(business: BusinessData): string {
   return `¡Hola ${business.name}! 🔥 Quisiera hacer un pedido.`
 }
 
@@ -96,11 +117,13 @@ export interface QuickChatOption {
 }
 
 // Opciones rápidas del widget de WhatsApp flotante (ver WhatsAppFloatButton).
-export const QUICK_CHAT_OPTIONS: QuickChatOption[] = [
-  { label: 'Quiero hacer un pedido', message: `¡Hola ${business.name}! 🔥 Quiero hacer un pedido.` },
-  { label: 'Tengo una consulta sobre el menú', message: `¡Hola ${business.name}! 🔥 Tengo una consulta sobre el menú.` },
-  {
-    label: 'Quiero saber si hacen envíos a mi zona',
-    message: `¡Hola ${business.name}! 🔥 Quiero saber si hacen envíos a mi zona.`,
-  },
-]
+export function getQuickChatOptions(business: BusinessData): QuickChatOption[] {
+  return [
+    { label: 'Quiero hacer un pedido', message: `¡Hola ${business.name}! 🔥 Quiero hacer un pedido.` },
+    { label: 'Tengo una consulta sobre el menú', message: `¡Hola ${business.name}! 🔥 Tengo una consulta sobre el menú.` },
+    {
+      label: 'Quiero saber si hacen envíos a mi zona',
+      message: `¡Hola ${business.name}! 🔥 Quiero saber si hacen envíos a mi zona.`,
+    },
+  ]
+}

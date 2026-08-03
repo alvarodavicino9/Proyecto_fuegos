@@ -2,11 +2,12 @@ import ClockIcon from '@/components/icons/ClockIcon'
 import LocationIcon from '@/components/icons/LocationIcon'
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon'
 import InstagramIcon from '@/components/icons/InstagramIcon'
-import { business } from '@/data/business'
+import { useSiteSettings } from '@/context/SiteSettingsContext'
 import { buildGenericGreeting, buildWhatsAppUrl } from '@/utils/whatsapp'
 import styles from './Location.module.css'
 
 export default function Location() {
+  const { business } = useSiteSettings()
   const mapQuery = encodeURIComponent(business.address.full)
 
   return (
@@ -43,7 +44,7 @@ export default function Location() {
               <div>
                 <p className={styles.label}>Contacto</p>
                 <a
-                  href={buildWhatsAppUrl(buildGenericGreeting())}
+                  href={buildWhatsAppUrl(buildGenericGreeting(business), business.whatsappNumber)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.phoneLink}
